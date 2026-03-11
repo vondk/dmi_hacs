@@ -10,65 +10,92 @@ This integration provides:
 - **5-day daily forecasts** with high/low temperatures
 - **Purpose-built** for weather data retrieval
 
-## Installation
+---
 
-### Method 1: Manual Installation (Recommended)
+## 📦 Installation
+
+### HACS (Recommended)
+
+1. Open **HACS** in Home Assistant
+2. Click the three-dot menu (top right) → **Custom Repositories**
+3. Add this repository:
+```
+   https://github.com/your-username/dmi_hacs
+```
+4. Set category to: **Integration**
+5. Click **Add**
+6. Search for **DMI Weather** in HACS Integrations
+7. Click **Install**
+8. Restart Home Assistant if prompted
+9. Go to **Settings → Devices & Services → Add Integration** and search for **DMI Weather**
+
+### Manual Installation
 
 1. Download or clone this repository
-2. Copy the `custom_components/dmi_weather` folder to your Home Assistant `config/custom_components/` directory
+2. Copy the `custom_components/dmi_weather` folder into `config/custom_components/`
 3. Restart Home Assistant
-4. Go to **Settings** → **Devices & Services** → **Add Integration**
-5. Search for "DMI Weather" and add it
+4. Add the integration via **Settings → Devices & Services**
 
-### Method 2: HACS Installation
+---
 
-1. Add this repository to HACS as a custom repository
-2. Install the integration through HACS
-3. Restart Home Assistant
-4. Add the integration through the UI
+## ⚙️ Configuration
 
-## Configuration
+After installation:
 
-### Step 1: Add Integration
+1. Go to **Settings → Devices & Services → Add Integration**
+2. Search for **DMI Weather** and click on it
+3. Enter your location details:
+   - **Name**: A friendly name for your weather entity (e.g., `Copenhagen Weather`)
+   - **Latitude**: The latitude of your location (e.g., `55.6761`)
+   - **Longitude**: The longitude of your location (e.g., `12.5683`)
+4. Save — the weather entity is created immediately, no restart required
 
-1. In Home Assistant, go to **Settings** → **Devices & Services** → **Add Integration**
-2. Search for "DMI Weather"
-3. Click on **DMI Weather**
+To update settings, go to **Settings → Devices & Services → DMI Weather → Configure**.
 
-### Step 2: Enter Configuration
+---
 
-1. **Name**: A friendly name for your weather entity (e.g., "Rydebäck Weather")
-2. **Latitude**: The latitude of your location (e.g., 55.9667 for Rydebäck, Sweden)
-3. **Longitude**: The longitude of your location (e.g., 12.7667 for Rydebäck, Sweden)
+## 🌤️ Sensor Behavior
 
-### Example Configuration for Rydebäck, Sweden
-
-- **Name**: Rydebäck Weather
-- **Latitude**: 55.9667
-- **Longitude**: 12.7667
-
-## Usage
-
-Once configured, the integration will create a weather entity that provides:
+Once configured, the integration creates a weather entity that reports current conditions and forecasts.
 
 ### Current Weather
-- Temperature (in Celsius)
-- Humidity (percentage)
-- Pressure (hPa)
-- Wind speed (m/s)
-- Wind direction (degrees)
-- Weather condition (clear, cloudy, rain, etc.)
-- Visibility (km)
+
+| Parameter         | Unit    | Description                        |
+| ----------------- | ------- | ---------------------------------- |
+| Temperature       | °C      | Current air temperature            |
+| Humidity          | %       | Relative humidity                  |
+| Pressure          | hPa     | Atmospheric pressure               |
+| Wind Speed        | m/s     | Wind speed                         |
+| Wind Direction    | degrees | Wind bearing                       |
+| Weather Condition | —       | Clear, cloudy, rain, snow, etc.    |
+| Visibility        | km      | Horizontal visibility              |
 
 ### Daily Forecast
+
 - Maximum and minimum temperatures
 - Precipitation amount
 - Wind speed and direction
 - Weather conditions
 
-## Data Source
+### Example: Current Weather State
 
-This integration uses the DMI HARMONIE DINI IG weather model, which provides:
+```yaml
+state: "sunny"
+attributes:
+  temperature: 18.4
+  humidity: 62
+  pressure: 1013
+  wind_speed: 4.2
+  wind_bearing: 210
+  visibility: 25
+```
+
+---
+
+## 🗃️ Data Source
+
+This integration uses the **DMI HARMONIE DINI IG** weather model, which provides:
+
 - High-resolution weather forecasts
 - Coverage for Denmark and surrounding areas
 - Updates every 6 hours
@@ -76,14 +103,17 @@ This integration uses the DMI HARMONIE DINI IG weather model, which provides:
 
 For more information about the DMI Open Data API, visit: https://www.dmi.dk/friedata/dokumentation-paa-engelsk
 
-## Troubleshooting
+---
+
+## 🔧 Troubleshooting
 
 ### Common Issues
 
-1. **No data available**: 
-   - Verify your coordinates are within the DMI coverage area
-   - Try different coordinates if available
-2. **API errors**: 
+1. **No data available**
+   - Verify your coordinates are within the DMI coverage area (Denmark and surrounding regions)
+   - Try slightly different coordinates if the exact location returns no data
+
+2. **API errors**
    - Check your internet connection
    - Check DMI API status
 
@@ -98,19 +128,32 @@ logger:
     custom_components.dmi_weather: debug
 ```
 
-## Contributing
+---
+
+## 🔗 Related Projects
+
+- [@crusell](https://github.com/crusell)'s original [DMI_HA_Plugin](https://github.com/crusell/DMI_HA_Plugin) — the foundation this project is built upon
+- [Home Assistant](https://www.home-assistant.io/) — the excellent smart home framework
+
+---
+
+## 🤝 Contributing
 
 Feel free to contribute to this project by:
 - Reporting bugs
 - Suggesting new features
 - Submitting pull requests
 
-## License
+---
 
-This project is licensed under the MIT License.
+## 📄 License
 
-## Acknowledgments
+MIT License — see `LICENSE` file for details
 
-- [@crusell](https://github.com/crusell) for the original [DMI_HA_Plugin](https://github.com/crusell/DMI_HA_Plugin) which this project is built upon
+---
+
+## 🙏 Acknowledgments
+
+- [@crusell](https://github.com/crusell) for the original [DMI_HA_Plugin](https://github.com/crusell/DMI_HA_Plugin)
 - Danish Meteorological Institute (DMI) for providing the Open Data API
 - Home Assistant community for the excellent framework
