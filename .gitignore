@@ -1,8 +1,39 @@
-/.claude
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+.env.*.private
+.env.secrets
+
+# Credentials and sensitive configs
+secrets/
+config/private*
+config/secret*
+credentials.json
+*_credentials.*
+*_passwords.*
+
+# IDE and tools
+.claude/
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python
 __pycache__/
 *.py[cod]
-.env
-.venv/
-*.log
+*$py.class
+.python-version
+venv/
+env/
+
+# OS
 .DS_Store
 Thumbs.db
+*.log
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
