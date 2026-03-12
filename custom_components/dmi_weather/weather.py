@@ -3,8 +3,6 @@ from __future__ import annotations
 
 import logging
 from datetime import datetime, timedelta
-
-SCAN_INTERVAL = timedelta(minutes=1)  # HA polls every minute; actual API calls throttled per config
 from typing import Any, cast
 
 from homeassistant.components.weather import (
@@ -47,6 +45,8 @@ from .const import (
 from .dmi_api import DMIWeatherAPI
 
 _LOGGER = logging.getLogger(__name__)
+
+SCAN_INTERVAL = timedelta(minutes=DEFAULT_UPDATE_INTERVAL)
 
 
 async def async_setup_entry(

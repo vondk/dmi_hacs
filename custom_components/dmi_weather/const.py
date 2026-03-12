@@ -15,7 +15,7 @@ EDR_COLLECTIONS_ENDPOINT = "/collections"
 EDR_POSITION_QUERY = "/position"
 
 # API request parameters
-DEFAULT_TIMEOUT = 60  # Increased to 60 seconds for slow API responses
+DEFAULT_TIMEOUT = 30
 MAX_FORECAST_DAYS = 5
 
 CONF_UPDATE_INTERVAL = "update_interval"

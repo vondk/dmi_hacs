@@ -100,34 +100,12 @@ class DMIWeatherAPI:
             return
         async with self._update_lock:
             collection_id = "harmonie_dini_sf"
-            for attempt in range(self._max_retries):
-                try:
-                    await self._fetch_weather_data(collection_id)
-                    _LOGGER.debug("Weather data updated successfully (collection: %s)", collection_id)
-                    return
-                except Exception as err:
-                    _LOGGER.warning("Attempt %d/%d failed: %s", attempt + 1, self._max_retries, err)
-                    if attempt < self._max_retries - 1:
-                        if "Rate limit" in str(err):
-                            wait_time = 60
-                            _LOGGER.info("Rate limited by DMI API, waiting %d seconds before retry...", wait_time)
-                        elif "404" in str(err) or "No weather data" in str(err):
-                            _LOGGER.info("Collection %s not available, fetching available collections", collection_id)
-                            try:
-                                collections = await self._get_collections()
-                                if collections:
-                                    collection_id = list(collections.keys())[0]
-                                    _LOGGER.info("Falling back to collection: %s", collection_id)
-                            except Exception:
-                                pass
-                            wait_time = (2 ** attempt) * 2
-                        else:
-                            wait_time = (2 ** attempt) * 2
-                        _LOGGER.info("Waiting %d seconds before retry...", wait_time)
-                        await asyncio.sleep(wait_time)
-                    else:
-                        _LOGGER.error("All %d attempts failed. Last error: %s", self._max_retries, err)
-                        raise
+            try:
+                await self._fetch_weather_data(collection_id)
+                _LOGGER.debug("Weather data updated successfully (collection: %s)", collection_id)
+            except Exception as err:
+                _LOGGER.warning("Failed to update weather data: %s", err)
+                raise
 
     async def _get_collections(self) -> Dict[str, Any]:
         """Get available EDR collections."""
