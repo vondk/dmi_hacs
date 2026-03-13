@@ -89,17 +89,13 @@ class DMIWeatherAPI:
 
     async def update(self) -> None:
         """Update weather data from DMI EDR API."""
-        if self._update_lock.locked():
-            _LOGGER.debug("Update already in progress, skipping concurrent request")
-            return
-        async with self._update_lock:
-            collection_id = "harmonie_dini_sf"
-            try:
-                await self._fetch_weather_data(collection_id)
-                _LOGGER.debug("Weather data updated successfully (collection: %s)", collection_id)
-            except Exception as err:
-                _LOGGER.warning("Failed to update weather data: %s", err)
-                raise
+        collection_id = "harmonie_dini_sf"
+        try:
+            await self._fetch_weather_data(collection_id)
+            _LOGGER.debug("Weather data updated successfully (collection: %s)", collection_id)
+        except Exception as err:
+            _LOGGER.warning("Failed to update weather data: %s", err)
+            raise
 
     async def _get_collections(self) -> Dict[str, Any]:
         """Get available EDR collections."""
